@@ -80,11 +80,16 @@ def display_messages():
 refresh_interval = 2  # seconds
 last_refresh_time = time.time()
 
-# Refresh every 2 seconds
-while True:
-    current_time = time.time()
-    if current_time - last_refresh_time >= refresh_interval:
-        # Update the last refresh timestamp
-        last_refresh_time = current_time
-        display_messages()  # Trigger message display refresh
-    time.sleep(refresh_interval)
+# Refresh every 2 seconds (this will trigger a re-run of the script)
+if 'last_refresh_time' not in st.session_state:
+    st.session_state.last_refresh_time = time.time()
+
+# Check if 2 seconds have passed, and trigger rerun
+if time.time() - st.session_state.last_refresh_time >= refresh_interval:
+    # Update the last refresh timestamp
+    st.session_state.last_refresh_time = time.time()
+    # Trigger the page rerun to refresh content
+    st.experimental_rerun()
+
+# Display the messages
+display_messages()

@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
+import time
 
 # Function to initialize and read messages
 def get_messages():
@@ -75,5 +76,19 @@ def display_messages():
     else:
         st.write("No messages in the file yet.")
 
-# Automatically display the messages
-display_messages()
+# Check if this is the first time loading or if we need to refresh
+if 'last_refresh' not in st.session_state:
+    st.session_state.last_refresh = time.time()
+
+# Refresh every 2 seconds (adjust the interval as needed)
+refresh_interval = 2  # seconds
+if time.time() - st.session_state.last_refresh >= refresh_interval:
+    # Update the last refresh timestamp
+    st.session_state.last_refresh = time.time()
+
+    # Trigger message display refresh
+    display_messages()
+
+else:
+    # Display messages without refreshing if within the time limit
+    display_messages()

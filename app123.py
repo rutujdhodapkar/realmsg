@@ -49,21 +49,12 @@ if username:
         update_messages(message, username)
         st.success("Message sent!")
 
-# Display the last 10 messages from the CSV
-st.subheader("Last 10 messages:")
-
-# Show content of the CSV file below the messages
-st.subheader("Content of the 'msg.csv' file:")
-df = get_messages()  # Get the current messages from CSV
-if not df.empty:
-    st.write(df)  # Show the DataFrame in the UI
-else:
-    st.write("No messages in the file yet.")
-
 # Container to display messages
 message_container = st.empty()
 
 # Display the last 10 messages
+st.subheader("Last 10 messages:")
+df = get_messages()  # Get the current messages from CSV
 if not df.empty:
     # Display messages from the CSV file
     message_container.empty()
@@ -71,3 +62,10 @@ if not df.empty:
         message_container.write(f"{row['username']}: {row['message']}")
 else:
     message_container.write("No messages yet.")
+
+# Show content of the CSV file below the messages
+st.subheader("resent messages")
+if not df.empty:
+    st.write(df)  # Show the DataFrame in the UI
+else:
+    st.write("No messages in the file yet.")

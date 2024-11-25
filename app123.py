@@ -36,6 +36,7 @@ def update_messages(message, username):
 
 # Streamlit UI components
 st.title("Message Board")
+st.write("Wand more feature?? wait of more updates over time")
 
 # User input for username
 username = st.text_input("Enter your username:", "")
@@ -83,3 +84,4 @@ if st.button("Refresh Messages"):
 
 # Show messages when the page loads or when messages are sent
 display_messages()
+st.write("If any error occur, in red box, ignore it or contact admin")

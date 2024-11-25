@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import os
-import time
 
 # Function to initialize and read messages
 def get_messages():
@@ -53,7 +52,7 @@ if username:
 # Container to display messages
 message_container = st.empty()
 
-# Function to display the last 10 messages and auto-refresh
+# Function to display the last 10 messages
 def display_messages():
     # Get the current messages from CSV
     df = get_messages()
@@ -76,10 +75,5 @@ def display_messages():
     else:
         st.write("No messages in the file yet.")
 
-# Auto-refresh every 2 seconds using Streamlit’s built-in rerun method with `st.empty()`
-if st.button("Refresh Messages"):
-    display_messages()
-    st.experimental_rerun()  # Trigger re-run after button click to refresh
-
-# Show messages when the page loads or when messages are sent
+# Automatically display the messages
 display_messages()

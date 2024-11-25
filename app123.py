@@ -76,8 +76,10 @@ def display_messages():
     else:
         st.write("No messages in the file yet.")
 
-# Auto-refresh every 2 seconds using Streamlit's built-in mechanism
-st.experimental_rerun()
-time.sleep(2)
+# Auto-refresh every 2 seconds using Streamlit’s built-in rerun method with `st.empty()`
+if st.button("Refresh Messages"):
+    display_messages()
+    st.experimental_rerun()  # Trigger re-run after button click to refresh
 
-display_messages()  # Call the function to display messages and update the UI
+# Show messages when the page loads or when messages are sent
+display_messages()

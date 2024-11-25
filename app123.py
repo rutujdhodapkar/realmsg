@@ -36,7 +36,7 @@ def update_messages(message, username):
 
 # Streamlit UI components
 st.title("Message Board")
-st.write("Want more feature?? wait of more updates over time")
+st.write("Want more feature?? wait for next updates")
 
 # User input for username
 username = st.text_input("Enter your username:", "")

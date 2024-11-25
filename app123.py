@@ -53,7 +53,7 @@ if username:
 # Container to display messages
 message_container = st.empty()
 
-# Function to display the last 10 messages
+# Function to display the last 10 messages and auto-refresh
 def display_messages():
     # Get the current messages from CSV
     df = get_messages()
@@ -76,20 +76,8 @@ def display_messages():
     else:
         st.write("No messages in the file yet.")
 
-# Adding auto-refresh functionality
-refresh_interval = 2  # seconds
-last_refresh_time = time.time()
-
-# Refresh every 2 seconds (this will trigger a re-run of the script)
-if 'last_refresh_time' not in st.session_state:
-    st.session_state.last_refresh_time = time.time()
-
-# Check if 2 seconds have passed, and trigger rerun
-if time.time() - st.session_state.last_refresh_time >= refresh_interval:
-    # Update the last refresh timestamp
-    st.session_state.last_refresh_time = time.time()
-    # Trigger the page rerun to refresh content
-    st.experimental_rerun()
-
-# Display the messages
-display_messages()
+# Use Streamlit's rerun feature to refresh every 2 seconds
+while True:
+    display_messages()
+    time.sleep(2)  # Wait for 2 seconds before refreshing
+    st.experimental_rerun()  # Trigger the re-run of the script to refresh the content

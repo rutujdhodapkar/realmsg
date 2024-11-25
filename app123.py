@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
+import time
 
 # Function to initialize and read messages
 def get_messages():
@@ -52,20 +53,32 @@ if username:
 # Container to display messages
 message_container = st.empty()
 
-# Display the last 10 messages
-st.subheader("Last 10 messages:")
-df = get_messages()  # Get the current messages from CSV
-if not df.empty:
-    # Display messages from the CSV file
-    message_container.empty()
-    for i, row in df.iterrows():
-        message_container.write(f"{row['username']}: {row['message']}")
-else:
-    message_container.write("No messages yet.")
+# Function to display the last 10 messages and auto-refresh
+def display_messages():
+    while True:
+        # Get the current messages from CSV
+        df = get_messages()
+        
+        # Clear the previous content in the message container
+        message_container.empty()
+        
+        # Display the last 10 messages
+        st.subheader("Last 10 messages:")
+        if not df.empty:
+            for i, row in df.iterrows():
+                message_container.write(f"{row['username']}: {row['message']}")
+        else:
+            message_container.write("No messages yet.")
+        
+        # Show content of the CSV file below the messages
+        st.subheader("Recent messages")
+        if not df.empty:
+            st.write(df)  # Show the DataFrame in the UI
+        else:
+            st.write("No messages in the file yet.")
+        
+        # Wait for 2 seconds before refreshing the messages
+        time.sleep(2)
 
-# Show content of the CSV file below the messages
-st.subheader("resent messages")
-if not df.empty:
-    st.write(df)  # Show the DataFrame in the UI
-else:
-    st.write("No messages in the file yet.")
+# Call the display function to refresh messages every 2 seconds
+display_messages()

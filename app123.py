@@ -76,8 +76,8 @@ def display_messages():
     else:
         st.write("No messages in the file yet.")
 
-# Use Streamlit's rerun feature to refresh every 2 seconds
-while True:
-    display_messages()
-    time.sleep(2)  # Wait for 2 seconds before refreshing
-    st.experimental_rerun()  # Trigger the re-run of the script to refresh the content
+# Auto-refresh every 2 seconds using Streamlit's built-in mechanism
+st.experimental_rerun()
+time.sleep(2)
+
+display_messages()  # Call the function to display messages and update the UI

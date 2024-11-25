@@ -76,19 +76,15 @@ def display_messages():
     else:
         st.write("No messages in the file yet.")
 
-# Check if this is the first time loading or if we need to refresh
-if 'last_refresh' not in st.session_state:
-    st.session_state.last_refresh = time.time()
-
-# Refresh every 2 seconds (adjust the interval as needed)
+# Adding auto-refresh functionality
 refresh_interval = 2  # seconds
-if time.time() - st.session_state.last_refresh >= refresh_interval:
-    # Update the last refresh timestamp
-    st.session_state.last_refresh = time.time()
+last_refresh_time = time.time()
 
-    # Trigger message display refresh
-    display_messages()
-
-else:
-    # Display messages without refreshing if within the time limit
-    display_messages()
+# Refresh every 2 seconds
+while True:
+    current_time = time.time()
+    if current_time - last_refresh_time >= refresh_interval:
+        # Update the last refresh timestamp
+        last_refresh_time = current_time
+        display_messages()  # Trigger message display refresh
+    time.sleep(refresh_interval)
